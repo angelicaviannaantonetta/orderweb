@@ -1,0 +1,2045 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pemesanan - Vinix WebSpire</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4bb543;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #fff;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        h1, h2, h3, h4 {
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: 3rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0px 0;
+        }
+
+        /* Logo Container */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo {
+            height: 100px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #003399;
+            margin-left: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+            padding: 5px 0;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        /* WhatsApp Button */
+        .wa-button {
+            display: flex;
+            align-items: center;
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            margin-left: 20px;
+        }
+
+        .wa-button:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .wa-button i {
+            font-size: 1.2rem;
+            margin-right: 8px;
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        /* Hero Section dengan Gambar Latar Belakang */
+        .hero {
+            padding: 180px 0 100px;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.85) 0%, rgba(58, 12, 163, 0.85) 100%), 
+                        url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 2rem;
+        }
+
+        .hero .btn {
+            background: white;
+            color: var(--primary);
+        }
+
+        .hero .btn:hover {
+            background: var(--light-gray);
+        }
+
+        .hero .btn-secondary {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .hero .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* Value Proposition */
+        .value-props {
+            background: var(--light);
+        }
+
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .value-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .value-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .value-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            text-align: left;
+        }
+
+        .about-text h2:after {
+            left: 0;
+            transform: none;
+        }
+
+        .about-image {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Portfolio */
+        .portfolio {
+            background: var(--light);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .portfolio-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .portfolio-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .portfolio-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .portfolio-item:hover .portfolio-image img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-content {
+            padding: 20px;
+        }
+
+        .portfolio-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        /* Services */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid var(--primary);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Pricing */
+        .pricing {
+            background: var(--light);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .pricing-card.popular {
+            border: 2px solid var(--primary);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-bottom-left-radius: 5px;
+        }
+
+        .pricing-header {
+            padding: 30px;
+            text-align: center;
+            background: var(--light);
+        }
+
+        .pricing-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .pricing-desc {
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        .pricing-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .price-amount {
+            font-size: 2.5rem;
+            display: block;
+        }
+
+        .pricing-period {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .pricing-features {
+            padding: 30px;
+        }
+
+        .pricing-features ul {
+            list-style: none;
+        }
+
+        .pricing-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-features i {
+            color: var(--success);
+            margin-right: 10px;
+        }
+
+        .pricing-cta {
+            padding: 0 30px 30px;
+            text-align: center;
+        }
+
+        /* Testimonials */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+
+        .testimonial-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .testimonial-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .testimonial-rating {
+            color: #ffc107;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: var(--gray);
+        }
+
+        /* Process */
+        .process {
+            background: var(--light);
+        }
+
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 50px;
+        }
+
+        .process-steps:before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--light-gray);
+            z-index: 1;
+        }
+
+        .process-step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .step-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        /* FAQ Section */
+        .faq {
+            background: white;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .faq-question {
+            padding: 20px;
+            background: var(--light);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .faq-question:hover {
+            background: #e9ecef;
+        }
+
+        .faq-question i {
+            transition: transform 0.3s;
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            background: white;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 20px;
+            max-height: 500px;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        /* CTA Section dengan Gambar Latar Belakang */
+        .cta {
+            padding: 100px 0;
+            background: linear-gradient(135deg, rgba(58, 12, 163, 0.85) 0%, rgba(67, 97, 238, 0.85) 100%), 
+                        url('https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .cta h2 {
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta h2:after {
+            background: white;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .cta .btn {
+            background: white;
+            color: var(--primary);
+        }
+
+        .cta .btn:hover {
+            background: var(--light-gray);
+        }
+
+        .cta .btn-secondary {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .cta .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #343a40;
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+
+        /* Form Styles */
+        .form-container {
+            max-width: 800px;
+            margin: 150px auto 50px;
+            padding: 40px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* Order Summary */
+        .order-summary {
+            background: var(--light);
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .order-summary h3 {
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
+
+        /* Payment Info */
+        .payment-info {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            margin: 25px 0;
+        }
+
+        .payment-info h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .bank-account {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border: 1px solid var(--light-gray);
+        }
+
+        .bank-account:last-child {
+            margin-bottom: 0;
+        }
+
+        /* File Upload */
+        .file-upload {
+            border: 2px dashed var(--light-gray);
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-upload:hover {
+            border-color: var(--primary);
+            background: #f8f9fa;
+        }
+
+        .file-upload i {
+            font-size: 3rem;
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-name {
+            margin-top: 10px;
+            color: var(--gray);
+        }
+
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background: white;
+            color: #333;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 400px;
+            border-left: 4px solid #4bb543;
+            animation: slideInRight 0.3s ease;
+        }
+        .notification.error {
+            border-left-color: #e63946;
+        }
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+        .notification.success .notification-content i {
+            color: #4bb543;
+        }
+        .notification.error .notification-content i {
+            color: #e63946;
+        }
+        .notification-close {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+        }
+        .notification-close:hover {
+            background: #f5f5f5;
+        }
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-text h2 {
+                text-align: center;
+            }
+            
+            .about-text h2:after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
+                margin-left: 0;
+            }
+            
+            .wa-button {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-buttons, .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .process-steps {
+                flex-direction: column;
+                gap: 40px;
+            }
+            
+            .process-steps:before {
+                display: none;
+            }
+            
+            .form-container {
+                margin: 80px 20px 30px;
+                padding: 25px;
+            }
+            
+            /* Responsive untuk logo text */
+            .logo-text {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo-text {
+                font-size: 1.2rem;
+            }
+            
+            .logo {
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#home" class="logo-container">
+                    <img src="img/logo.png" alt="Vinix7 WebSpire" class="logo">
+                    <span class="logo-text">WebSpire</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#home">Beranda</a></li>
+                    <li><a href="#about">Tentang</a></li>
+                    <li><a href="#portfolio">Portofolio</a></li>
+                    <li><a href="#services">Layanan</a></li>
+                    <li><a href="#pricing">Paket</a></li>
+                    <li><a href="#testimonials">Testimoni</a></li>
+                    <li><a href="#process">Alur</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+                <a href="https://wa.me/6281234567890?text=Halo%20Vinix%20WebSpire,%20saya%20ingin%20konsultasi%20tentang%20pembuatan%20website" class="wa-button" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>Hubungi Kami</span>
+                </a>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Website Profesional untuk Bisnis Anda</h1>
+            <p>Kami menyediakan jasa pembuatan website dengan desain modern, responsif, dan SEO-friendly untuk membantu bisnis Anda tumbuh di era digital.</p>
+            <div class="hero-buttons">
+                <a href="#pricing" class="btn">Lihat Paket</a>
+                <a href="#about" class="btn btn-secondary">Pelajari Lebih Lanjut</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Proposition -->
+    <section class="value-props">
+        <div class="container">
+            <h2>Mengapa Memilih Kami?</h2>
+            <div class="value-grid">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Website Cepat</h3>
+                    <p>Website yang kami buat dioptimalkan untuk kecepatan loading terbaik, meningkatkan pengalaman pengguna dan SEO.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Responsif</h3>
+                    <p>Desain website yang menyesuaikan dengan semua ukuran layar, dari desktop hingga smartphone.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>SEO Friendly</h3>
+                    <p>Struktur website yang dioptimalkan untuk mesin pencari, membantu meningkatkan peringkat di Google.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Tentang Kami</h2>
+                    <p>Vinix7 WebSpire adalah penyedia jasa pembuatan website profesional dengan pengalaman lebih dari 5 tahun dalam industri digital. Kami telah membantu ratusan bisnis dari berbagai sektor untuk memiliki kehadiran online yang kuat.</p>
+                    <p>Tim kami terdiri dari developer dan designer berpengalaman yang selalu mengikuti perkembangan teknologi terbaru. Kami percaya bahwa website yang baik tidak hanya menarik secara visual, tetapi juga fungsional dan mudah digunakan.</p>
+                    <p>Dengan pendekatan yang personal, kami akan memahami kebutuhan bisnis Anda dan memberikan solusi website yang tepat untuk mencapai tujuan Anda.</p>
+                    <a href="#pricing" class="btn">Mulai Sekarang</a>
+                </div>
+                <div class="about-image">
+                    <img src="https://media.istockphoto.com/id/2211280692/photo/group-of-professional-business-colleagues-working-together-and-preparing-new-project-on-a.webp?a=1&s=612x612&w=0&k=20&c=pS-rGVFMX2HDqNBrkOH1WK0ptS_qD1PVOpWRhM3eVcg=" alt="Tim Vinix7 WebSpire">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio -->
+    <section class="portfolio" id="portfolio">
+        <div class="container">
+            <h2>Proyek Terbaru Kami</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1552664688-cf412ec27db2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Website Restoran">
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>Website Restoran Bistro</h3>
+                        <p>Website dengan sistem reservasi online untuk restoran mewah di Jakarta.</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <img src="https://plus.unsplash.com/premium_photo-1664202525979-80d1da46b34b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzB8fHN0b3JlfGVufDB8fDB8fHww" alt="Website E-commerce">
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>Toko Online Fashion</h3>
+                        <p>Platform e-commerce dengan integrasi payment gateway untuk brand fashion lokal.</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Website Perusahaan">
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>Website Perusahaan Konstruksi</h3>
+                        <p>Website perusahaan dengan portfolio proyek dan sistem kontak yang terintegrasi.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2>Layanan Kami</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Website Perusahaan</h3>
+                    <p>Website profesional untuk perusahaan dengan informasi lengkap tentang layanan dan kontak.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3>Toko Online</h3>
+                    <p>Platform e-commerce lengkap dengan sistem pembayaran dan manajemen produk.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-blog"></i>
+                    </div>
+                    <h3>Website Blog</h3>
+                    <p>Platform blogging dengan sistem manajemen konten yang mudah digunakan.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Website Responsif</h3>
+                    <p>Desain website yang optimal di semua perangkat, dari desktop hingga mobile.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2>Pilihan Paket</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <div class="pricing-name">Standard</div>
+                        <div class="pricing-desc">Cocok untuk bisnis kecil atau profil perusahaan</div>
+                        <div class="pricing-price">Mulai dari <span class="price-amount">Rp 850.000</span></div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> 5 Halaman Website</li>
+                            <li><i class="fas fa-check"></i> Desain Responsif</li>
+                            <li><i class="fas fa-check"></i> Copywriting</li>
+                            <li><i class="fas fa-check"></i> Form Kontak</li>
+                            <li><i class="fas fa-check"></i> Desain Aset Pendukung Web</li>
+                            <li><i class="fas fa-check"></i> Optimasi Mobile</li>
+                            <li><i class="fas fa-check"></i> Optimasi SEO Dasar</li>
+                            <li><i class="fas fa-times"></i> Sistem Admin</li>
+                            <li><i class="fas fa-times"></i> Integrasi Media Sosial</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-cta">
+                        <a href="#orderForm" class="btn" onclick="selectPackage('standard')">Pesan Sekarang</a>
+                    </div>
+                </div>
+                <div class="pricing-card popular">
+                    <div class="popular-badge">POPULAR</div>
+                    <div class="pricing-header">
+                        <div class="pricing-name">Business</div>
+                        <div class="pricing-desc">Ideal untuk UMKM yang ingin berkembang</div>
+                        <div class="pricing-price">Mulai dari <span class="price-amount">Rp 2.000.000</span></div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> 10 Halaman Website</li>
+                            <li><i class="fas fa-check"></i> Desain Responsif</li>
+                            <li><i class="fas fa-check"></i> Copywriting</li>
+                            <li><i class="fas fa-check"></i> Form Kontak & Newsletter</li>
+                            <li><i class="fas fa-check"></i> Desain Aset Pendukung Web</li>
+                            <li><i class="fas fa-check"></i> Optimasi Mobile</li>
+                            <li><i class="fas fa-check"></i> Optimasi SEO Menengah</li>
+                            <li><i class="fas fa-check"></i> Sistem Admin</li>
+                            <li><i class="fas fa-check"></i> Integrasi Media Sosial</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-cta">
+                        <a href="#orderForm" class="btn" onclick="selectPackage('business')">Pesan Sekarang</a>
+                    </div>
+                </div>
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <div class="pricing-name">Premium</div>
+                        <div class="pricing-desc">Solusi lengkap untuk perusahaan besar</div>
+                        <div class="pricing-price">Mulai dari <span class="price-amount">Rp 2.500.000</span></div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> 10 Halaman ke Atas</li>
+                            <li><i class="fas fa-check"></i> Desain Custom & Responsif</li>
+                            <li><i class="fas fa-check"></i> Copywriting</li>
+                            <li><i class="fas fa-check"></i> Sistem Kontak Lengkap</li>
+                            <li><i class="fas fa-check"></i> Desain Aset Pendukung Web</li>
+                            <li><i class="fas fa-check"></i> Optimasi Mobile</li>
+                            <li><i class="fas fa-check"></i> Optimasi SEO Advanced</li>
+                            <li><i class="fas fa-check"></i> Sistem Admin Advanced</li>
+                            <li><i class="fas fa-check"></i> Integrasi Media Sosial & Analytics</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-cta">
+                        <a href="#orderForm" class="btn" onclick="selectPackage('premium')">Pesan Sekarang</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2>Apa Kata Klien Kami</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah Wijaya">
+                        </div>
+                        <div class="testimonial-info">
+                            <h4>Sarah Wijaya</h4>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-text">
+                        "Sangat puas dengan hasil website toko online kami. Proses pengerjaan cepat dan hasilnya sesuai ekspektasi. Penjualan meningkat 40% sejak website diluncurkan."
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/54.jpg" alt="Budi Santoso">
+                        </div>
+                        <div class="testimonial-info">
+                            <h4>Budi Santoso</h4>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-text">
+                        "Tim Vinix7 WebSpire sangat profesional dan responsif. Website perusahaan kami sekarang terlihat modern dan mudah diakses di semua perangkat. Highly recommended!"
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Diana Putri">
+                        </div>
+                        <div class="testimonial-info">
+                            <h4>Diana Putri</h4>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-text">
+                        "Proses dari konsultasi hingga launching sangat smooth. Website restoran kami sekarang memiliki sistem reservasi online yang memudahkan pelanggan."
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process -->
+    <section class="process" id="process">
+        <div class="container">
+            <h2>Alur Pengerjaan</h2>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Konsultasi Kebutuhan</h3>
+                        <p>Diskusikan kebutuhan dan tujuan website Anda dengan tim kami.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Penawaran & Kesepakatan</h3>
+                        <p>Kami berikan penawaran harga dan timeline pengerjaan.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Desain & Pengembangan</h3>
+                        <p>Tim kami mulai mendesain dan mengembangkan website sesuai kebutuhan.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Revisi</h3>
+                        <p>Anda memberikan masukan dan kami melakukan revisi sesuai permintaan.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>Launching Website</h3>
+                        <p>Website siap diluncurkan dan diakses publik.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <h3>Maintenance</h3>
+                        <p>Kami siap membantu maintenance website setelah launching.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2>Pertanyaan yang Sering Diajukan</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Berapa lama proses pembuatan website?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Waktu pengerjaan bervariasi tergantung kompleksitas website. Untuk paket Standard biasanya 7-10 hari kerja, Business 10-14 hari kerja, dan Premium 14-21 hari kerja. Timeline ini termasuk proses revisi sesuai kebutuhan Anda.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Apakah bisa custom sesuai kebutuhan khusus?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Tentu saja! Kami dapat menyesuaikan website sesuai kebutuhan khusus bisnis Anda. Untuk kebutuhan custom yang tidak termasuk dalam paket standar, kami akan memberikan penawaran terpisah setelah diskusi mendalam tentang kebutuhan Anda.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Apakah sudah termasuk hosting & domain?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Harga paket tidak termasuk hosting dan domain. Kami dapat membantu Anda memilih dan membeli hosting serta domain yang sesuai dengan kebutuhan website Anda. Biaya hosting mulai dari Rp 200.000/tahun dan domain .com sekitar Rp 150.000/tahun.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Apa sistem pembayarannya?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Kami menerapkan sistem pembayaran 50% di awal sebagai DP dan 50% sisanya setelah website selesai dan sebelum launching. Pembayaran dapat dilakukan melalui transfer bank, virtual account, atau e-wallet.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Apakah website sudah SEO friendly?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Ya, semua website yang kami buat sudah menerapkan prinsip dasar SEO on-page seperti struktur heading yang benar, URL yang SEO friendly, meta tags, dan optimasi gambar. Untuk optimasi SEO yang lebih mendalam, tersedia di paket Business dan Premium.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Apakah ada biaya maintenance setelah website selesai?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Kami memberikan garansi gratis selama 1 bulan setelah website launching. Setelah itu, tersedia paket maintenance mulai dari Rp 300.000/bulan yang mencakup update konten minor, backup data, dan monitoring keamanan website.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="cta">
+        <div class="container">
+            <h2>Siap Meningkatkan Bisnis Anda?</h2>
+            <p>Jangan lewatkan kesempatan untuk memiliki website profesional yang akan membantu bisnis Anda tumbuh lebih pesat. Konsultasi gratis dengan tim kami sekarang!</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/6281234567890?text=Halo%20Vinix%20WebSpire,%20saya%20ingin%20konsultasi%20gratis%20tentang%20pembuatan%20website" class="btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    Konsultasi Gratis
+                </a>
+                <a href="#pricing" class="btn btn-secondary">Lihat Paket Layanan</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Form Section -->
+    <section id="orderForm" class="form-container">
+        <h2>Form Pemesanan Website</h2>
+        
+        <form id="orderFormElement">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">Nama Lengkap *</label>
+                    <input type="text" id="name" name="name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="phone">Nomor WhatsApp *</label>
+                    <input type="tel" id="phone" name="phone" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="package">Jenis Paket *</label>
+                    <select id="package" name="package" class="form-control" required>
+                        <option value="">Pilih Paket</option>
+                        <option value="standard">Standard - Rp 850.000</option>
+                        <option value="business">Business - Rp 2.000.000</option>
+                        <option value="premium">Premium - Rp 2.500.000</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Deskripsi Kebutuhan Website *</label>
+                <textarea id="description" name="description" class="form-control" rows="5" placeholder="Jelaskan kebutuhan website Anda, tujuan, fitur yang diinginkan, dll." required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="meetingDate">Jadwal Meeting Konsultasi *</label>
+                <input type="datetime-local" id="meetingDate" name="meetingDate" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-full">Lanjut ke Pembayaran</button>
+        </form>
+    </section>
+
+    <!-- Payment Section -->
+    <section id="paymentSection" class="form-container" style="display: none;">
+        <h2>Detail Pemesanan & Pembayaran</h2>
+        
+        <div id="orderSummary" class="order-summary">
+            <!-- Order summary will be populated by JavaScript -->
+        </div>
+
+        <div class="payment-info">
+            <h4><i class="fas fa-university"></i> Informasi Rekening Pembayaran</h4>
+            
+            <div class="bank-account">
+                <strong>Bank BCA</strong><br>
+                No. Rekening: 1234 5678 9012<br>
+                Atas Nama: PT. Vinix7 WebSpire Indonesia
+            </div>
+            
+            <div class="bank-account">
+                <strong>Bank Mandiri</strong><br>
+                No. Rekening: 9876 5432 1098<br>
+                Atas Nama: PT. Vinix7 WebSpire Indonesia
+            </div>
+            
+            <div class="bank-account">
+                <strong>Bank BNI</strong><br>
+                No. Rekening: 5678 9012 3456<br>
+                Atas Nama: PT. Vinix7 WebSpire Indonesia
+            </div>
+            
+            <p style="margin-top: 15px; font-size: 0.9rem; color: #666;">
+                <i class="fas fa-info-circle"></i> 
+                Setelah melakukan pembayaran, harap konfirmasi dengan mengupload bukti transfer pada form di bawah.
+            </p>
+        </div>
+
+        <form id="paymentForm">
+            <div class="form-group">
+                <label>Upload Bukti Pembayaran *</label>
+                <div class="file-upload" id="fileUpload">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Klik untuk upload bukti transfer</p>
+                    <p class="file-name" id="fileName">Belum ada file yang dipilih</p>
+                    <input type="file" id="paymentProof" class="file-input" accept="image/*,.pdf">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="notes">Catatan (Opsional)</label>
+                <textarea id="notes" name="notes" class="form-control" rows="3" placeholder="Tambahkan catatan jika diperlukan..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-full">Konfirmasi Pembayaran</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Vinix7 WebSpire</h3>
+                    <p>Penyedia jasa pembuatan website profesional dengan pengalaman lebih dari 5 tahun. Kami siap membantu bisnis Anda tumbuh dengan kehadiran online yang kuat.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Navigasi Cepat</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Beranda</a></li>
+                        <li><a href="#about">Tentang</a></li>
+                        <li><a href="#portfolio">Portofolio</a></li>
+                        <li><a href="#services">Layanan</a></li>
+                        <li><a href="#pricing">Paket</a></li>
+                        <li><a href="#testimonials">Testimoni</a></li>
+                        <li><a href="#process">Alur</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Kontak</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> Jl. Raden Mattaher No. 88, Jakarta</li>
+                        <li><i class="fas fa-phone"></i> +62 812-3456-7890</li>
+                        <li><i class="fas fa-envelope"></i> info@vinix7webspire.com</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Ikuti Kami</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Vinix7 WebSpire. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Order System Functions
+        class OrderSystem {
+            constructor() {
+                this.orders = JSON.parse(localStorage.getItem('orders')) || [];
+                this.adminCredentials = {
+                    username: 'admin',
+                    password: 'admin123'
+                };
+            }
+
+            // Save orders to localStorage
+            saveOrders() {
+                localStorage.setItem('orders', JSON.stringify(this.orders));
+            }
+
+            // Create new order
+            createOrder(orderData) {
+                const order = {
+                    id: Date.now().toString(),
+                    ...orderData,
+                    status: 'pending',
+                    createdAt: new Date().toISOString(),
+                    paymentProof: null
+                };
+                
+                this.orders.push(order);
+                this.saveOrders();
+                return order;
+            }
+
+            // Get all orders
+            getOrders() {
+                return this.orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            }
+
+            // Update order status
+            updateOrderStatus(orderId, status) {
+                const order = this.orders.find(o => o.id === orderId);
+                if (order) {
+                    order.status = status;
+                    this.saveOrders();
+                    return true;
+                }
+                return false;
+            }
+
+            // Add payment proof
+            addPaymentProof(orderId, fileData) {
+                const order = this.orders.find(o => o.id === orderId);
+                if (order) {
+                    order.paymentProof = fileData;
+                    order.status = 'paid';
+                    this.saveOrders();
+                    return true;
+                }
+                return false;
+            }
+
+            // Package prices
+            getPackagePrice(packageType) {
+                const prices = {
+                    'standard': 850000,
+                    'business': 2000000,
+                    'premium': 2500000
+                };
+                return prices[packageType] || 0;
+            }
+
+            // Package details
+            getPackageDetails(packageType) {
+                const details = {
+                    'standard': {
+                        name: 'Standard',
+                        price: 850000,
+                        description: 'Cocok untuk bisnis kecil atau profil perusahaan'
+                    },
+                    'business': {
+                        name: 'Business',
+                        price: 2000000,
+                        description: 'Ideal untuk UMKM yang ingin berkembang'
+                    },
+                    'premium': {
+                        name: 'Premium',
+                        price: 2500000,
+                        description: 'Solusi lengkap untuk perusahaan besar'
+                    }
+                };
+                return details[packageType] || details.standard;
+            }
+        }
+
+        // Initialize order system
+        const orderSystem = new OrderSystem();
+
+        // Utility functions
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            }).format(amount);
+        }
+
+        function showNotification(message, type = 'success') {
+            // Remove existing notifications
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notification => notification.remove());
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                    <span>${message}</span>
+                </div>
+                <button class="notification-close" onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (mobileMenu) {
+                mobileMenu.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                });
+            }
+
+            // FAQ Accordion
+            document.querySelectorAll('.faq-question').forEach(question => {
+                question.addEventListener('click', () => {
+                    const item = question.parentNode;
+                    item.classList.toggle('active');
+                });
+            });
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if(targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        if (navLinks.classList.contains('active')) {
+                            navLinks.classList.remove('active');
+                        }
+                    }
+                });
+            });
+
+            // Navbar background on scroll
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('header');
+                if(window.scrollY > 100) {
+                    header.style.background = 'rgba(255, 255, 255, 0.95)';
+                    header.style.backdropFilter = 'blur(10px)';
+                } else {
+                    header.style.background = 'white';
+                    header.style.backdropFilter = 'none';
+                }
+            });
+
+            // Order form handling
+            const orderFormElement = document.getElementById('orderFormElement');
+            if (orderFormElement) {
+                orderFormElement.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const formData = {
+                        name: document.getElementById('name').value,
+                        email: document.getElementById('email').value,
+                        phone: document.getElementById('phone').value,
+                        package: document.getElementById('package').value,
+                        description: document.getElementById('description').value,
+                        meetingDate: document.getElementById('meetingDate').value
+                    };
+                    
+                    // Validate form
+                    if (!formData.name || !formData.email || !formData.phone || !formData.package || !formData.description || !formData.meetingDate) {
+                        showNotification('Harap lengkapi semua field yang wajib diisi!', 'error');
+                        return;
+                    }
+                    
+                    // Save order data to localStorage temporarily
+                    localStorage.setItem('currentOrder', JSON.stringify(formData));
+                    
+                    // Show payment section
+                    document.getElementById('orderForm').style.display = 'none';
+                    document.getElementById('paymentSection').style.display = 'block';
+                    
+                    // Populate order summary
+                    const packageDetails = orderSystem.getPackageDetails(formData.package);
+                    const price = packageDetails.price;
+                    
+                    document.getElementById('orderSummary').innerHTML = `
+                        <h3>Detail Pemesanan</h3>
+                        <div class="summary-item">
+                            <span>Nama:</span>
+                            <span>${formData.name}</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Email:</span>
+                            <span>${formData.email}</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>No. WhatsApp:</span>
+                            <span>${formData.phone}</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Paket:</span>
+                            <span>${packageDetails.name}</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Jadwal Meeting:</span>
+                            <span>${new Date(formData.meetingDate).toLocaleString('id-ID')}</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Total Pembayaran:</span>
+                            <span>${formatCurrency(price)}</span>
+                        </div>
+                    `;
+                    
+                    // Scroll to payment section
+                    document.getElementById('paymentSection').scrollIntoView({ behavior: 'smooth' });
+                });
+            }
+
+            // Payment form handling
+            const paymentForm = document.getElementById('paymentForm');
+            if (paymentForm) {
+                const fileUpload = document.getElementById('fileUpload');
+                const paymentProof = document.getElementById('paymentProof');
+                const fileName = document.getElementById('fileName');
+                
+                // File upload handling
+                fileUpload.addEventListener('click', function() {
+                    paymentProof.click();
+                });
+                
+                paymentProof.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        fileName.textContent = file.name;
+                        
+                        // Validate file size (max 5MB)
+                        if (file.size > 5 * 1024 * 1024) {
+                            showNotification('Ukuran file terlalu besar! Maksimal 5MB.', 'error');
+                            paymentProof.value = '';
+                            fileName.textContent = 'Belum ada file yang dipilih';
+                            return;
+                        }
+                        
+                        // Validate file type
+                        const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
+                        if (!allowedTypes.includes(file.type)) {
+                            showNotification('Format file tidak didukung! Gunakan JPG, PNG, atau PDF.', 'error');
+                            paymentProof.value = '';
+                            fileName.textContent = 'Belum ada file yang dipilih';
+                            return;
+                        }
+                    }
+                });
+                
+                // Form submission
+                paymentForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const file = paymentProof.files[0];
+                    const notes = document.getElementById('notes').value;
+                    
+                    if (!file) {
+                        showNotification('Harap upload bukti pembayaran!', 'error');
+                        return;
+                    }
+                    
+                    // Get current order data
+                    const currentOrder = JSON.parse(localStorage.getItem('currentOrder'));
+                    
+                    if (!currentOrder) {
+                        showNotification('Data pemesanan tidak ditemukan!', 'error');
+                        setTimeout(() => {
+                            window.location.href = '#orderForm';
+                        }, 2000);
+                        return;
+                    }
+                    
+                    // Read file as data URL
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const fileData = {
+                            name: file.name,
+                            type: file.type,
+                            data: e.target.result,
+                            uploadedAt: new Date().toISOString(),
+                            size: file.size
+                        };
+                        
+                        // Create order in system
+                        const packageDetails = orderSystem.getPackageDetails(currentOrder.package);
+                        const orderData = {
+                            ...currentOrder,
+                            packagePrice: packageDetails.price,
+                            notes: notes,
+                            meetingDate: currentOrder.meetingDate
+                        };
+                        
+                        const order = orderSystem.createOrder(orderData);
+                        orderSystem.addPaymentProof(order.id, fileData);
+                        
+                        // Clear temporary data
+                        localStorage.removeItem('currentOrder');
+                        
+                        showNotification('Pembayaran berhasil dikonfirmasi! Tim kami akan menghubungi Anda dalam 1x24 jam.');
+                        
+                        // Reset forms
+                        document.getElementById('orderFormElement').reset();
+                        document.getElementById('paymentForm').reset();
+                        fileName.textContent = 'Belum ada file yang dipilih';
+                        
+                        // Show order form again
+                        document.getElementById('paymentSection').style.display = 'none';
+                        document.getElementById('orderForm').style.display = 'block';
+                        
+                        // Scroll to top
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    };
+                    
+                    reader.onerror = function() {
+                        showNotification('Gagal membaca file! Silakan coba lagi.', 'error');
+                    };
+                    
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            // Set minimum date for meeting (tomorrow)
+            const meetingDate = document.getElementById('meetingDate');
+            if (meetingDate) {
+                const tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                meetingDate.min = tomorrow.toISOString().slice(0, 16);
+            }
+
+            // Pre-select package from URL parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const packageParam = urlParams.get('package');
+            if (packageParam && ['standard', 'business', 'premium'].includes(packageParam)) {
+                document.getElementById('package').value = packageParam;
+            }
+        });
+
+        // Function to select package from pricing cards
+        function selectPackage(packageType) {
+            document.getElementById('package').value = packageType;
+            document.getElementById('orderForm').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
